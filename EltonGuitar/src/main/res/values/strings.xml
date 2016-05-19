@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HelloGuitar</string>
+    <string name="search_for">search...</string>
+</resources>
