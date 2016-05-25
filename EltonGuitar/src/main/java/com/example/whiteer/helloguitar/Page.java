@@ -3,16 +3,20 @@ package com.example.whiteer.helloguitar;
 
 import android.support.v4.app.Fragment;
 
+import java.io.Serializable;
+
 /**
  * Created by whiteer on 16/05/19.
  */
-public class Page {
+public class Page{
     private PageID id;
     private Fragment fragment;
+    private String title;
 
-    public Page(PageID id, Fragment fragment) {
+    public Page(PageID id, Fragment fragment, String title) {
         this.id = id;
         this.fragment = fragment;
+        this.title = title;
     }
 
     public PageID getId() {
@@ -31,4 +35,11 @@ public class Page {
         this.fragment = fragment;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

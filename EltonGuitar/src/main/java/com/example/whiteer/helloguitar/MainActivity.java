@@ -1,47 +1,24 @@
 package com.example.whiteer.helloguitar;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.support.v7.widget.SearchView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.JsResult;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-enum PageID{
-    MainPageID
-}
 
 public class MainActivity extends AppCompatActivity {
 
+    private ViewPager viewPager;
+    private MyPagerAdapter myPagerAdapter;
+    private Toolbar tbSearch;
+    private int currentPage=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +32,70 @@ public class MainActivity extends AppCompatActivity {
 
     public void findViews(){
 
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
-        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
+        tbSearch = (Toolbar)findViewById(R.id.tbSearch);
+        setSupportActionBar(tbSearch);
+        viewPager = (MainViewPager)findViewById(R.id.mainViewPager);
+        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                myPagerAdapter.getItem(currentPage).setHasOptionsMenu(false);
+                myPagerAdapter.getItem(position).setHasOptionsMenu(true);
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+
+    public void setPage(int index,Page page){
+        myPagerAdapter.setPage(index, page);
+
+        currentPage = 0;
+        myPagerAdapter.getItem(0).setHasOptionsMenu(true);
+        for (int i=1; i<myPagerAdapter.getCount();i++){
+            myPagerAdapter.getItem(i).setHasOptionsMenu(false);
+        }
+        viewPager.setAdapter(viewPager.getAdapter());
     }
 
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         List<Page> pageList;
+        FragmentManager fragmentManager;
+//        public MyPagerAdapter(FragmentManager fm) {
+//            super(fm);
+//            pageList = new ArrayList<>();
+//            pageList.add(new Page(PageID.MainPageID,new NewFragment()));
+//            pageList.add(new Page(PageID.MainPageID,new TestFragment()));
+//        }
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragmentManager = fm;
+            Bundle bundle = new Bundle();
+
             pageList = new ArrayList<>();
-            pageList.add(new Page(PageID.MainPageID,new MainFragment()));
+
+            List<Page> tabPageList = new ArrayList<>();
+            tabPageList.add(new Page(PageID.OrderNewPageID, new NewFragment(), PrefManager.OrderNewPageTitle));
+            tabPageList.add(new Page(PageID.OrderRatePageID,new RateFragment(), PrefManager.OrderRatePageTitle));
+            pageList.add(new Page(PageID.MainPageID, new SearchFragment(tabPageList), PrefManager.MainPageTitle));
+
+            pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
+            pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
+
         }
 
         @Override
@@ -79,6 +107,23 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             return pageList.get(position).getFragment();
         }
+
+        public void setPage(int index,Page page){
+
+            Fragment fragment = pageList.get(index).getFragment();
+            FragmentTransaction fragmentTransaction = fragment.getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(fragment);
+            fragmentTransaction.commit();
+            pageList.set(index, page);
+            notifyDataSetChanged();
+
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return pageList.get(position).getTitle();
+        }
+
     }
 
 }
