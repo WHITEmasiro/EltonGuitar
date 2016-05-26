@@ -1,6 +1,5 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment;
 
-import android.accounts.Account;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +16,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.net.PasswordAuthentication;
+import com.example.whiteer.helloguitar.DBConnector;
+import com.example.whiteer.helloguitar.MainActivity;
+import com.example.whiteer.helloguitar.Page;
+import com.example.whiteer.helloguitar.PageID;
+import com.example.whiteer.helloguitar.PrefManager;
+import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.fragment.member.MemberFragment;
+import com.example.whiteer.helloguitar.fragment.member.SaveRequestFragment;
+import com.example.whiteer.helloguitar.fragment.member.SaveSongFragment;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

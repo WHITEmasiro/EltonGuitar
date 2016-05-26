@@ -1,28 +1,25 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment.basic;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.whiteer.helloguitar.DBConnector;
+import com.example.whiteer.helloguitar.PdfViewActivity;
+import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.Song;
+
 import java.net.URL;
 import java.util.List;
 
@@ -186,7 +183,7 @@ public class BaseFragment extends Fragment {
                     //new a Bundle object and transport the data
                     Song song = songList.get(position);
                     //華語歌曲-三字部-黃路梓茵_Lulu-腿之歌.pdf
-                    String pdfName = song.songClass + "-" + song.detail + "-" + song.singer + "-" + song.name + ".pdf";
+                    String pdfName = song.getsongClass() + "-" + song.getdetail() + "-" + song.getSinger() + "-" + song.getName() + ".pdf";
                     String pdfPath = "http://petradise.website/EltonGuitar/Sheet/" + pdfName;
                     Bundle bundle = new Bundle();
                     bundle.putString("pdfPath", pdfPath);

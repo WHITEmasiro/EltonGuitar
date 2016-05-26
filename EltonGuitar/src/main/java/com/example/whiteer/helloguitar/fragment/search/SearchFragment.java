@@ -1,12 +1,14 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.whiteer.helloguitar.Page;
+import com.example.whiteer.helloguitar.fragment.basic.TabFragment;
+
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * Created by whiteer on 16/05/25.

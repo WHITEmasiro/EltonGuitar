@@ -1,4 +1,8 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment.member;
+
+import com.example.whiteer.helloguitar.Page;
+import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.fragment.basic.TabFragment;
 
 import java.util.List;
 

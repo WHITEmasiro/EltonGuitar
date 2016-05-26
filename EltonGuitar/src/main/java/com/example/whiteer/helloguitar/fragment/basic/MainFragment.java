@@ -1,4 +1,4 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment.basic;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.whiteer.helloguitar.R;
+
 import java.util.ArrayList;
 import java.util.List;
 

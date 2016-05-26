@@ -1,4 +1,4 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment.basic;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -6,25 +6,23 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Serializable;
+import com.example.whiteer.helloguitar.NoSwipeViewPager;
+import com.example.whiteer.helloguitar.Page;
+import com.example.whiteer.helloguitar.R;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * Created by whiteer on 16/05/21.
  */
 public class TabFragment extends Fragment {
 
-    List<Page> pageList = new ArrayList<>();
+    protected List<Page> pageList = new ArrayList<>();
     TabPageAdapter tabPageAdapter;
     NoSwipeViewPager viewPager;
     int currentPageIndex = 0;

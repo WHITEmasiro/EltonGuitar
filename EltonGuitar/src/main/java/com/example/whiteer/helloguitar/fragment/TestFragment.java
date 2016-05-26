@@ -1,10 +1,12 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.whiteer.helloguitar.R;
 
 /**
  * Created by whiteer on 16/05/20.

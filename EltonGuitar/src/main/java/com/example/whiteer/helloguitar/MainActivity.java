@@ -9,6 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.example.whiteer.helloguitar.fragment.LoginFragment;
+import com.example.whiteer.helloguitar.fragment.search.NewFragment;
+import com.example.whiteer.helloguitar.fragment.search.RateFragment;
+import com.example.whiteer.helloguitar.fragment.search.SearchFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 

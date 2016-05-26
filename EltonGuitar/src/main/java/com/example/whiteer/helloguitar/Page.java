@@ -3,8 +3,6 @@ package com.example.whiteer.helloguitar;
 
 import android.support.v4.app.Fragment;
 
-import java.io.Serializable;
-
 /**
  * Created by whiteer on 16/05/19.
  */

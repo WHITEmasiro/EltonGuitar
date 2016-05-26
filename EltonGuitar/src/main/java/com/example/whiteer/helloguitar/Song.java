@@ -6,11 +6,11 @@ package com.example.whiteer.helloguitar;
 public class Song {
 
     int id;
-    String name;
-    String singer;
-    String date;
-    String songClass;
-    String detail;
+    private String name;
+    private String singer;
+    private String date;
+    private String songClass;
+    private String detail;
 
     public Song(int id, String name, String singer, String date, String songClass, String detail) {
         this.id = id;

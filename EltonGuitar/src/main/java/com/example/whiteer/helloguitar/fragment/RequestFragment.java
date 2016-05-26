@@ -1,4 +1,4 @@
-package com.example.whiteer.helloguitar;
+package com.example.whiteer.helloguitar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.whiteer.helloguitar.R;
 
 /**
  * Created by whiteer on 16/05/24.
