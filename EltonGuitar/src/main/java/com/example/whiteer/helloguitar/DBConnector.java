@@ -113,7 +113,7 @@ public class DBConnector {
                 String classB = jsonObject.getString("ClassB");
 
                 //add song here
-                songList.add(new Song(id,name,singer,date,classA,classB));
+                songList.add(new Song(id, name, singer, date, classA, classB));
             }
 
         }catch (Exception e){
@@ -130,23 +130,22 @@ public class DBConnector {
         try {
 
             JSONArray jsonArray = execute(urlString, paramsString);
+            String id = "";
 
-            if(jsonArray == null){
-                sharedPreferences.edit()
-                        .putString(PrefManager.USER_ID_KEY,"");
-                return;
-            }
+            if(jsonArray != null){
 
-            for(int i=0; i<jsonArray.length(); i++){
+                 for(int i=0; i<jsonArray.length(); i++){
 
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                     JSONObject jsonObject = jsonArray.getJSONObject(i);
+                     id = jsonObject.getString("ID");
 
-                String id = jsonObject.getString("ID");
-                sharedPreferences.edit()
-                        .putString(PrefManager.USER_ID_KEY, id)
-                        .apply();
+                 }
 
             }
+
+            sharedPreferences.edit()
+                    .putString(PrefManager.USER_ID_KEY, id)
+                    .apply();
 
         }catch (Exception e){
 
@@ -156,8 +155,56 @@ public class DBConnector {
 
     public void register(String urlString,String paramsString){
 
-        execute(urlString,paramsString);
+        execute(urlString, paramsString);
 
+    }
+
+
+    public List<Request> getRequestList(String urlString,String paramsString){
+        List<Request> requestList = new ArrayList<>();
+
+        try {
+
+            JSONArray jsonArray = execute(urlString, paramsString);
+
+            for(int i=0; i<jsonArray.length(); i++){
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                String idString = jsonObject.getString("ID");
+                int id = Integer.parseInt(idString);
+                String userID = jsonObject.getString("User_ID");
+                String sheetName = jsonObject.getString("Sheet_Name");
+                String singerName = jsonObject.getString("Singer_Name");
+                String songURL = jsonObject.getString("Song_URL");
+                String lyricURL = jsonObject.getString("Lyrics_URL");
+                String requestDate = jsonObject.getString("Request_Date");
+                String mark = jsonObject.getString("Mark");
+
+                //add request here
+                requestList.add(new Request(id, userID, sheetName, singerName, songURL, lyricURL, requestDate, mark));
+
+
+
+//                [{"ID":"21",
+//                        "User_ID":"",
+//                        "Sheet_Name":"",
+//                        "Singer_Name":"",
+//                        "Song_URL":"",
+//                        "Lyrics_URL":"",
+//                        "Request_Date":"2016-05-27",
+//                        "Mark":"0"},
+
+//                Request(String id, String userID, String sheetName, String singerName, String songURL, String lyricURL, String mark)
+
+
+            }
+
+        }catch (Exception e){
+
+        }
+
+        return requestList;
     }
 
 

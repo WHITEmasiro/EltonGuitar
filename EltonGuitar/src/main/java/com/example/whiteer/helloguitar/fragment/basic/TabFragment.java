@@ -20,11 +20,11 @@ import java.util.List;
 /**
  * Created by whiteer on 16/05/21.
  */
-public class TabFragment extends Fragment {
+public class TabFragment extends MyFragment {
 
     protected List<Page> pageList = new ArrayList<>();
-    TabPageAdapter tabPageAdapter;
-    NoSwipeViewPager viewPager;
+    protected TabPageAdapter tabPageAdapter;
+    protected NoSwipeViewPager viewPager;
     int currentPageIndex = 0;
 
 //    public static final TabFragment newInstance(List<Page> pageList){
@@ -73,6 +73,7 @@ public class TabFragment extends Fragment {
 
                 tabPageAdapter.getItem(currentPageIndex).setHasOptionsMenu(false);//at this time,currentPageIndex is index of the last page
                 tabPageAdapter.getItem(position).setHasOptionsMenu(true);
+                updatePage(position);
                 currentPageIndex = position;
 
             }
@@ -98,8 +99,18 @@ public class TabFragment extends Fragment {
 
     }
 
+    // used by child class
+    public void updatePage(int index){
 
+    }
 
+    @Override
+    public void update() {
+        super.update();
+        for(int i=0; i<tabPageAdapter.getCount(); i++){
+            ((MyFragment)tabPageAdapter.getItem(i)).update();
+        }
+    }
 
     //    @Override
 //    public void setMenuVisibility(boolean menuVisible) {
@@ -121,7 +132,7 @@ public class TabFragment extends Fragment {
 ////        }
 //    }
 
-    private class TabPageAdapter extends FragmentPagerAdapter{
+    protected class TabPageAdapter extends FragmentPagerAdapter{
         List<Page> pageList;
 
         public TabPageAdapter(FragmentManager fragmentManager){

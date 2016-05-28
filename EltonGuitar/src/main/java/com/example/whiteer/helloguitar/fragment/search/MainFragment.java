@@ -1,7 +1,10 @@
-package com.example.whiteer.helloguitar.fragment.basic;
+package com.example.whiteer.helloguitar.fragment.search;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -17,11 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.whiteer.helloguitar.DBConnector;
+import com.example.whiteer.helloguitar.PdfViewActivity;
+import com.example.whiteer.helloguitar.PrefManager;
 import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.Song;
+import com.example.whiteer.helloguitar.fragment.basic.BaseFragment;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +48,9 @@ enum DetailListViewType{
 
 public class MainFragment extends BaseFragment {
 
-    protected String keyword;
-    protected String songClass;
-    protected String detail;
+//    protected String keyword;
+//    protected String songClass;
+//    protected String detail;
     protected String order;
 
     private List<String> classList;
@@ -48,6 +58,7 @@ public class MainFragment extends BaseFragment {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView nvDrawer;
+    protected SearchView searchView;
     private ListView lvClass;
     DrawerListViewType drawerListViewType;
     DetailListViewType detailListViewType;
@@ -57,6 +68,7 @@ public class MainFragment extends BaseFragment {
                             Bundle savedInstanceState) {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
         return view;
 
     }
@@ -64,10 +76,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public void initSetting(){
 
-        urlString = "http://petradise.website/EltonGuitar/Sheet_Search/search_sheet.php";
-        keyword = "";
-        songClass = "";
-        detail = "";
+        urlString = "";
         order = "";
 
     }
@@ -174,11 +183,14 @@ public class MainFragment extends BaseFragment {
 
         //get searchview and set searchable configuration
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         //assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setIconifiedByDefault(false);//do not iconify the widget;expand it by default
+
+        searchView.setQuery(PrefManager.keyword, false);
+        setSongList();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -188,7 +200,7 @@ public class MainFragment extends BaseFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                keyword = newText;
+                PrefManager.keyword = newText;
                 setSongList();
 
 
@@ -198,10 +210,9 @@ public class MainFragment extends BaseFragment {
 
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.action_home:
                 if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -216,10 +227,62 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+//        System.out.println("OAO");
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
     public void setSongList(){
         //make string of parameters
-        paramsString = "Keyword=" + keyword + "&Class=" + songClass + "&Detail=" + detail + "&Order=" + order;
+        urlString = "http://petradise.website/EltonGuitar/Sheet_Search/search_sheet.php";
+        paramsString = "Keyword=" + PrefManager.keyword + "&Class=" + PrefManager.songClass + "&Detail=" + PrefManager.detail + "&Order=" + order;
         super.setSongList();
+    }
+
+    @Override
+    protected void setSongItem(final Song song, View view) {
+        super.setSongItem(song, view);
+        Button btnSaveSong = (Button)view.findViewById(R.id.btnSaveSong);
+        btnSaveSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getActivity().getApplicationContext();
+                SharedPreferences sharedPreferences = context.getSharedPreferences(PrefManager.PREF_NAME_USER_DATA, Context.MODE_PRIVATE);
+                String userId = sharedPreferences.getString(PrefManager.USER_ID_KEY, "");
+
+                urlString = "http://petradise.website/EltonGuitar/Sheet_Search/listed_sheet.php";
+                paramsString = "User_ID=" + userId + "&Sheet_ID=" + Integer.toString(song.getId());
+                new SaveSongTask().execute();
+            }
+        });
+    }
+
+    private class SaveSongTask extends AsyncTask<URL, Integer, Long>{
+
+
+        @Override
+        protected Long doInBackground(URL... params) {
+
+            long totalSize = 0;
+            try {
+
+                //save song
+                new DBConnector(getActivity().getApplicationContext()).execute(urlString, paramsString);
+
+            }catch (Exception e){
+
+            }
+
+            return totalSize;
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+
+
+        }
     }
 
     private class DrawerListAdapter extends BaseAdapter{
@@ -275,22 +338,21 @@ public class MainFragment extends BaseFragment {
 
 //                case NoDrawerListView:
 //                    break;
-
                 case ClassListViw:
 
                     drawerListViewType = DrawerListViewType.DetailListView;
-                    detail = "";
+                    PrefManager.detail = "";
                     if(position == 1){
                         detailListViewType = DetailListViewType.FirstCharacter;
                         lvClass.setAdapter(new DrawerListAdapter(getActivity(), detailLists.get(1)));
-                        songClass = classList.get(position);
+                        PrefManager.songClass = classList.get(position);
                     }else if(position == 4){
-                        songClass = "";
+                        PrefManager.songClass = "";
                         drawerLayout.closeDrawers();
                     }else{
                         detailListViewType = DetailListViewType.CharacterNumber;
                         lvClass.setAdapter(new DrawerListAdapter(getActivity(), detailLists.get(0)));
-                        songClass = classList.get(position);
+                        PrefManager.songClass = classList.get(position);
                     }
                     setSongList();
                     break;
@@ -301,9 +363,9 @@ public class MainFragment extends BaseFragment {
                         case CharacterNumber:
 
                             if(position>=0 && position<10){
-                                detail = detailLists.get(0).get(position);
+                                PrefManager.detail = detailLists.get(0).get(position);
                             }else if(position == 10){
-                                detail = "";
+                                PrefManager.detail = "";
                             }
 
                             setSongList();
@@ -314,9 +376,9 @@ public class MainFragment extends BaseFragment {
                         case FirstCharacter:
 
                             if(position>=0 && position<26){
-                                detail = detailLists.get(1).get(position);
+                                PrefManager.detail = detailLists.get(1).get(position);
                             }else if(position == 26){
-                                detail = "";
+                                PrefManager.detail = "";
                             }
 
                             setSongList();

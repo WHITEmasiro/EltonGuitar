@@ -22,6 +22,7 @@ import com.example.whiteer.helloguitar.Page;
 import com.example.whiteer.helloguitar.PageID;
 import com.example.whiteer.helloguitar.PrefManager;
 import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.fragment.basic.MyFragment;
 import com.example.whiteer.helloguitar.fragment.member.MemberFragment;
 import com.example.whiteer.helloguitar.fragment.member.SaveRequestFragment;
 import com.example.whiteer.helloguitar.fragment.member.SaveSongFragment;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
  * Created by whiteer on 16/05/22.
  */
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends MyFragment {
 
     enum TaskType{
         TaskNone,TaskLogin,TaskRegister
@@ -205,19 +206,20 @@ public class LoginFragment extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
 
                 //request page
-                Page page = new Page(PageID.RequestPageID, new RequestFragment(), PrefManager.RequestPageTitle);
-                mainActivity.setPage(1, page);
+                mainActivity.setPage(1, new Page(PageID.RequestPageID, new RequestFragment(), PrefManager.RequestPageTitle));
 
                 //page list for member page
                 List<Page> tabPageList = new ArrayList<>();
-                page = new Page(PageID.SavedSongPageID, new SaveSongFragment(), PrefManager.SavedSongPageTitle);
-                tabPageList.add(page);
-                page= new Page(PageID.SavedRequestPageID, new SaveRequestFragment(), PrefManager.SavedRequestPageTitle);
-                tabPageList.add(page);
+                tabPageList.add(new Page(PageID.SavedSongPageID, new SaveSongFragment(), PrefManager.SavedSongPageTitle));
+                tabPageList.add(new Page(PageID.SavedRequestPageID, new SaveRequestFragment(), PrefManager.SavedRequestPageTitle));
 
                 //member page
-                page = new Page(PageID.MemberPageID, new MemberFragment(tabPageList), PrefManager.MemberPageTitle);
-                mainActivity.setPage(2, page);
+                mainActivity.setPage(2, new Page(PageID.MemberPageID, new MemberFragment(tabPageList), PrefManager.MemberPageTitle));
+
+            }else{
+
+                //login fail
+
             }
 
         }

@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/tvRequestNameLabel"
         android:text="@string/requestNameLabel"
-        android:textSize="33dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/tvRequestSignerLabel"
         android:text="@string/requestSingerLabel"
-        android:textSize="33dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/tvRequestSongUrlLabel"
         android:text="@string/requestSongUrlLabel"
-        android:textSize="33dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
     <TextView
         android:id="@+id/tvRequestLyricUrlLabel"
         android:text="@string/requestLyricUrlLabel"
-        android:textSize="33dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -82,11 +82,11 @@
     <Button
         android:id="@+id/btnRequestSubmit"
         android:text="@string/btnRequestSubmit"
-        android:textSize="33dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/etRequestLyricUrl"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

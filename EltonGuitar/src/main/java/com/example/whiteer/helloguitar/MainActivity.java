@@ -1,5 +1,7 @@
 package com.example.whiteer.helloguitar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.whiteer.helloguitar.fragment.LoginFragment;
+import com.example.whiteer.helloguitar.fragment.RequestFragment;
+import com.example.whiteer.helloguitar.fragment.basic.MyFragment;
+import com.example.whiteer.helloguitar.fragment.member.MemberFragment;
+import com.example.whiteer.helloguitar.fragment.member.SaveRequestFragment;
+import com.example.whiteer.helloguitar.fragment.member.SaveSongFragment;
 import com.example.whiteer.helloguitar.fragment.search.NewFragment;
 import com.example.whiteer.helloguitar.fragment.search.RateFragment;
 import com.example.whiteer.helloguitar.fragment.search.SearchFragment;
@@ -52,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 myPagerAdapter.getItem(currentPage).setHasOptionsMenu(false);
-                myPagerAdapter.getItem(position).setHasOptionsMenu(true);
+
+                MyFragment selectedFragment = (MyFragment)myPagerAdapter.getItem(position);
+                selectedFragment.setHasOptionsMenu(true);
+                selectedFragment.update();
+
                 currentPage = position;
             }
 
@@ -89,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
             fragmentManager = fm;
-            Bundle bundle = new Bundle();
+            Context context = getApplicationContext();
+            SharedPreferences sharedPreferences = getSharedPreferences(PrefManager.PREF_NAME_USER_DATA, MODE_PRIVATE);
+            String userID = sharedPreferences.getString(PrefManager.USER_ID_KEY,"");
 
             pageList = new ArrayList<>();
 
@@ -98,8 +111,22 @@ public class MainActivity extends AppCompatActivity {
             tabPageList.add(new Page(PageID.OrderRatePageID,new RateFragment(), PrefManager.OrderRatePageTitle));
             pageList.add(new Page(PageID.MainPageID, new SearchFragment(tabPageList), PrefManager.MainPageTitle));
 
-            pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
-            pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
+            if(userID == ""){
+                pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
+                pageList.add(new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));
+            }else{
+
+                //request page
+                pageList.add(new Page(PageID.RequestPageID, new RequestFragment(), PrefManager.RequestPageTitle));
+
+                //page list for member page
+                tabPageList = new ArrayList<>();
+                tabPageList.add(new Page(PageID.SavedSongPageID, new SaveSongFragment(), PrefManager.SavedSongPageTitle));
+                tabPageList.add(new Page(PageID.SavedRequestPageID, new SaveRequestFragment(), PrefManager.SavedRequestPageTitle));
+
+                //member page
+                pageList.add(new Page(PageID.MemberPageID, new MemberFragment(tabPageList), PrefManager.MemberPageTitle));
+            }
 
         }
 

@@ -6,22 +6,14 @@
     android:id="@+id/loginLayout">
 
     <TextView
-        android:id="@+id/tvLoginTitle"
-        android:text="@string/login_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp" />
-
-    <TextView
         android:id="@+id/tvLoginMailLabel"
         android:text="@string/login_mail_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvLoginTitle"
-        android:layout_toLeftOf="@+id/tvLoginTitle"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="50dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="110dp"/>
 
     <TextView
         android:id="@+id/tvLoginPasswordLabel"
@@ -30,18 +22,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLoginMailLabel"
         android:layout_alignLeft="@+id/tvLoginMailLabel"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/etLoginMail"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLoginMailLabel"
         android:layout_toRightOf="@id/tvLoginMailLabel" />
 
     <EditText
         android:id="@+id/etLoginPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLoginPasswordLabel"
         android:layout_alignLeft="@id/etLoginMail"

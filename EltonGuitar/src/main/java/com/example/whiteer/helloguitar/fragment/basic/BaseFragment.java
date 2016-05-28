@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,10 +24,10 @@ import com.example.whiteer.helloguitar.Song;
 import java.net.URL;
 import java.util.List;
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends MyFragment {
 
-    private List<Song> songList;
-    private ListView lvSongs;
+    protected List<Song> songList;
+    protected ListView lvSongs;
 
 
     protected String urlString;
@@ -78,7 +79,22 @@ public class BaseFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-//    @Override
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        if(isResumed())super.setHasOptionsMenu(hasMenu);
+    }
+
+    public void forceHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        setSongList();
+    }
+
+    //    @Override
 //    public void onPrepareOptionsMenu(Menu menu) {
 //        super.onPrepareOptionsMenu(menu);
 //        System.out.println("menu prepare!!");
@@ -99,11 +115,24 @@ public class BaseFragment extends Fragment {
 //        setHasOptionsMenu(false);
 //    }
 
-    private class SongAdapter extends BaseAdapter{
+    protected void setSongItem(Song song, View view){
 
-        Context context;
-        LayoutInflater layoutInflater;
-        List<Song> songList;
+//            String text = song.getName() + " " + song.getSinger() + " " + song.getDate();
+
+        TextView tvSong = (TextView)view.findViewById(R.id.tvSong);
+        String title = song.getName();
+        tvSong.setText(title);
+        TextView tvSinger = (TextView)view.findViewById(R.id.tvSinger);
+        String subtitle = song.getSinger();
+        tvSinger.setText(subtitle);
+
+    }
+
+    protected class SongAdapter extends BaseAdapter{
+
+        protected Context context;
+        protected LayoutInflater layoutInflater;
+        protected List<Song> songList;
 
         public SongAdapter(Context context, List<Song> songList){
 
@@ -135,25 +164,25 @@ public class BaseFragment extends Fragment {
             if(view == null){
                 view = layoutInflater.inflate(R.layout.song_item, viewGroup, false);
             }
-            TextView tvSong = (TextView)view.findViewById(R.id.tvSong);
-            String text = song.getName() + " " + song.getSinger() + " " + song.getDate();
-            tvSong.setText(text);
+
+            setSongItem(song, view);
+
             return view;
 
         }
 
     }
 
-    private class DownloadTask extends AsyncTask<URL, Integer, Long> {
+    protected class DownloadTask extends AsyncTask<URL, Integer, Long> {
 
         @Override
         protected Long doInBackground(URL... urls){
 
             long totalSize = 0;
             try{
-                //get jsonString of data by url string
 
-                songList = new DBConnector(getActivity().getApplicationContext()).getSongList(urlString,paramsString);
+                  //get jsonString of data by url string
+                  songList = new DBConnector(getActivity().getApplicationContext()).getSongList(urlString,paramsString);
 
             }catch (Exception e){
 
@@ -171,7 +200,9 @@ public class BaseFragment extends Fragment {
         protected void onPostExecute(Long result){
             super.onPostExecute(result);
 
-            lvSongs.setAdapter((new SongAdapter(BaseFragment.this.getActivity(), songList)));
+            SongAdapter songAdapter = new SongAdapter(BaseFragment.this.getActivity(), songList);
+
+            lvSongs.setAdapter(songAdapter);
             lvSongs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

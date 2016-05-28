@@ -12,7 +12,11 @@ public class PrefManager {
     public static final String LoginPageTitle = "登入";
     public static final String RequestPageTitle = "求譜";
     public static final String MemberPageTitle = "會員";
-    public static final String SavedSongPageTitle = "儲存歌曲";
+    public static final String SavedSongPageTitle = "我的歌單";
     public static final String SavedRequestPageTitle = "求譜紀錄";
+
+    public static String keyword = "";
+    public static String songClass = "";
+    public static String detail = "";
 
 }

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.whiteer.helloguitar.fragment.basic.MainFragment;
-
 public class RateFragment extends MainFragment {
 
     @Override
@@ -14,6 +12,7 @@ public class RateFragment extends MainFragment {
                              Bundle savedInstanceState) {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
         return view;
 
     }

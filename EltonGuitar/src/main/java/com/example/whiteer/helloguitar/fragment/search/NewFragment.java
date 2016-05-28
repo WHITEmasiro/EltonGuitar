@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.whiteer.helloguitar.fragment.basic.MainFragment;
-
 public class NewFragment extends MainFragment {
 
     @Override
@@ -26,4 +24,5 @@ public class NewFragment extends MainFragment {
         order = "ByNew";//another is "ByRate"
 
     }
+
 }
