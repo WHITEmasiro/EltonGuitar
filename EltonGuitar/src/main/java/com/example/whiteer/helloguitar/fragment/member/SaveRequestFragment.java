@@ -98,6 +98,11 @@ public class SaveRequestFragment extends MyFragment {
                 //logout
 
                 MainActivity mainActivity = (MainActivity) getActivity();
+                Context context = mainActivity.getApplicationContext();
+                SharedPreferences sharedPreferences = context.getSharedPreferences(PrefManager.PREF_NAME_USER_DATA,Context.MODE_PRIVATE);
+                sharedPreferences.edit()
+                        .putString(PrefManager.USER_ID_KEY,"")
+                        .apply();
 
                 //change to login page
                 mainActivity.setPage(1, new Page(PageID.LoginPageID, new LoginFragment(), PrefManager.LoginPageTitle));

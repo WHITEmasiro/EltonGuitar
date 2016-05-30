@@ -162,7 +162,7 @@ public class LoginFragment extends MyFragment {
     @Override
     public void setHasOptionsMenu(boolean hasMenu) {
         super.setHasOptionsMenu(hasMenu);
-        if(hasMenu) getActivity().setTitle(R.string.login_title);
+        if(!isResumed() && hasMenu) getActivity().setTitle(R.string.login_title);
     }
 
     private class DownloadTask extends AsyncTask<URL, Integer, Long> {

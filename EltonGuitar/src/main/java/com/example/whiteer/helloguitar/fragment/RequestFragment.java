@@ -62,13 +62,20 @@ public class RequestFragment extends MyFragment {
 
                 Context context = getActivity().getApplicationContext();
                 SharedPreferences sharedPreferences = context.getSharedPreferences(PrefManager.PREF_NAME_USER_DATA, Context.MODE_PRIVATE);
-                String userID = sharedPreferences.getString(PrefManager.USER_ID_KEY,"");
+                String userID = sharedPreferences.getString(PrefManager.USER_ID_KEY, "");
+
+                String singer = etRequestSinger.getText().toString();
+                String song = etRequestName.getText().toString();
+                String songUrl = etRequestSongUrl.getText().toString();
+                String lyricUrl = etRequestLyricUrl.getText().toString();
+
+                if(userID.isEmpty() ||(singer.isEmpty() && song.isEmpty() && songUrl.isEmpty() && lyricUrl.isEmpty()))return;
 
                 paramsString = "ID=" + userID +
-                        "&Singer=" + etRequestSinger.getText().toString() +
-                        "&Song=" + etRequestName.getText().toString() +
-                        "&SongUrl=" + etRequestSongUrl.getText().toString() +
-                        "&LyricUrl=" + etRequestLyricUrl.getText().toString();
+                        "&Singer=" + singer +
+                        "&Song=" + song +
+                        "&SongUrl=" + songUrl +
+                        "&LyricUrl=" + lyricUrl;
 
                 new DownloadTask().execute();
 
