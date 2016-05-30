@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvRequestNameLabel"
+        android:text="@string/requestNameLabel"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:id="@+id/tvRequestSignerLabel"
+        android:text="@string/requestSingerLabel"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tvRequestNameLabel"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:id="@+id/tvRequestSongUrlLabel"
+        android:text="@string/requestSongUrlLabel"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tvRequestSignerLabel"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:id="@+id/tvRequestLyricUrlLabel"
+        android:text="@string/requestLyricUrlLabel"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tvRequestSongUrlLabel"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
+
+    <EditText
+        android:id="@+id/etRequestName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tvRequestNameLabel"
+        android:layout_alignBaseline="@id/tvRequestNameLabel"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:id="@+id/etRequestSinger"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tvRequestSignerLabel"
+        android:layout_alignBaseline="@id/tvRequestSignerLabel"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:id="@+id/etRequestSongUrl"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tvRequestSongUrlLabel"
+        android:layout_alignBaseline="@id/tvRequestSongUrlLabel"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:id="@+id/etRequestLyricUrl"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tvRequestLyricUrlLabel"
+        android:layout_alignBaseline="@id/tvRequestLyricUrlLabel"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/btnRequestSubmit"
+        android:text="@string/btnRequestSubmit"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRequestLyricUrl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

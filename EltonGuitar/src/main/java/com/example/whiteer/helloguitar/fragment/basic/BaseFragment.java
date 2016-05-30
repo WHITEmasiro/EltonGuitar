@@ -1,0 +1,236 @@
+package com.example.whiteer.helloguitar.fragment.basic;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.whiteer.helloguitar.DBConnector;
+import com.example.whiteer.helloguitar.PdfViewActivity;
+import com.example.whiteer.helloguitar.R;
+import com.example.whiteer.helloguitar.Song;
+
+import java.net.URL;
+import java.util.List;
+
+public class BaseFragment extends MyFragment {
+
+    protected List<Song> songList;
+    protected ListView lvSongs;
+
+
+    protected String urlString;
+    protected String paramsString;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //initial some setting with string
+        initSetting();
+
+        //create views
+        View view = inflater.inflate(R.layout.fragment_base, container, false);
+        findViews(view);
+        //must have to add menu
+//        setHasOptionsMenu(true);
+
+        return view;
+
+    }
+
+    public void initSetting(){
+
+        urlString = "";
+        paramsString = "";
+
+    }
+
+    public void findViews(View view){
+
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        lvSongs = (ListView)view.findViewById(R.id.lvSongs);
+        setSongList();
+
+    }
+
+    public void setSongList(){
+        //make url string
+        new DownloadTask().execute();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        System.out.println("menu created!!");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        if(isResumed())super.setHasOptionsMenu(hasMenu);
+    }
+
+    public void forceHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        setSongList();
+    }
+
+    //    @Override
+//    public void onPrepareOptionsMenu(Menu menu) {
+//        super.onPrepareOptionsMenu(menu);
+//        System.out.println("menu prepare!!");
+//    }
+
+//    @Override
+//    public void setMenuVisibility(boolean menuVisible) {
+////        System.out.println("set menu visibility!!");
+//        super.setMenuVisibility(menuVisible);
+//        setHasOptionsMenu(true);
+//
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        System.out.println("pause");
+//        super.onStop();
+//        setHasOptionsMenu(false);
+//    }
+
+    protected void setSongItem(Song song, View view){
+
+//            String text = song.getName() + " " + song.getSinger() + " " + song.getDate();
+
+        TextView tvSong = (TextView)view.findViewById(R.id.tvSong);
+        String title = song.getName();
+        tvSong.setText(title);
+        TextView tvSinger = (TextView)view.findViewById(R.id.tvSinger);
+        String subtitle = song.getSinger();
+        tvSinger.setText(subtitle);
+
+    }
+
+    protected class SongAdapter extends BaseAdapter{
+
+        protected Context context;
+        protected LayoutInflater layoutInflater;
+        protected List<Song> songList;
+
+        public SongAdapter(Context context, List<Song> songList){
+
+            this.context = context;
+            this.layoutInflater = LayoutInflater.from(context);
+            this.songList = songList;
+
+        }
+
+        @Override
+        public int getCount(){
+            return songList.size();
+        }
+
+        @Override
+        public Object getItem(int position){
+            return songList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position){
+            return songList.get(position).getId();
+        }
+
+        @Override
+        public View getView(int position,View view,ViewGroup viewGroup){
+
+            Song song = songList.get(position);
+            if(view == null){
+                view = layoutInflater.inflate(R.layout.song_item, viewGroup, false);
+            }
+
+            setSongItem(song, view);
+
+            return view;
+
+        }
+
+    }
+
+    protected class DownloadTask extends AsyncTask<URL, Integer, Long> {
+
+        @Override
+        protected Long doInBackground(URL... urls){
+
+            long totalSize = 0;
+            try{
+
+                  //get jsonString of data by url string
+                  songList = new DBConnector(getActivity().getApplicationContext()).getSongList(urlString,paramsString);
+
+            }catch (Exception e){
+
+            }
+
+            return totalSize;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress){
+            super.onProgressUpdate(progress);
+        }
+
+        @Override
+        protected void onPostExecute(Long result){
+            super.onPostExecute(result);
+
+            SongAdapter songAdapter = new SongAdapter(BaseFragment.this.getActivity(), songList);
+
+            lvSongs.setAdapter(songAdapter);
+            lvSongs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    // new a intent object and set the Activity to switch
+                    Intent intent = new Intent();
+                    intent.setClass(BaseFragment.this.getActivity(), PdfViewActivity.class);
+
+                    //new a Bundle object and transport the data
+                    Song song = songList.get(position);
+                    //華語歌曲-三字部-黃路梓茵_Lulu-腿之歌.pdf
+                    String pdfName = song.getsongClass() + "-" + song.getdetail() + "-" + song.getSinger() + "-" + song.getName() + ".pdf";
+                    String pdfPath = "http://petradise.website/EltonGuitar/Sheet/" + pdfName;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("pdfPath", pdfPath);
+
+                    //assign the bundle to intent
+                    intent.putExtras(bundle);
+
+                    //switch activity
+                    startActivity(intent);
+
+                }
+            });
+
+        }
+
+    }
+
+
+}

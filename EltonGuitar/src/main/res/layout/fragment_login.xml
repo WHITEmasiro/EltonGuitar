@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffdd99"
+    android:id="@+id/loginLayout">
+
+    <TextView
+        android:id="@+id/tvLoginMailLabel"
+        android:text="@string/login_mail_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="110dp"/>
+
+    <TextView
+        android:id="@+id/tvLoginPasswordLabel"
+        android:text="@string/login_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLoginMailLabel"
+        android:layout_alignLeft="@+id/tvLoginMailLabel"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/etLoginMail"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLoginMailLabel"
+        android:layout_toRightOf="@id/tvLoginMailLabel" />
+
+    <EditText
+        android:id="@+id/etLoginPassword"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLoginPasswordLabel"
+        android:layout_alignLeft="@id/etLoginMail"
+        android:password="true"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:text="@string/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLoginPasswordLabel"
+        android:layout_alignLeft="@id/tvLoginPasswordLabel"
+        android:layout_marginTop="50dp"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:text="@string/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/btnLogin"
+        android:layout_toRightOf="@id/btnLogin"/>
+
+
+
+</RelativeLayout>
