@@ -146,7 +146,7 @@ public class MainFragment extends BaseFragment {
         classList.add("西洋歌曲");
         classList.add("日韓歌曲");
         classList.add("其它歌曲");
-        classList.add("全部歌曲");
+        classList.add("全部");
 
         //make list of character number
         String chineseNumbers[] = {"一","二","三","四","五","六","七","八","九"};

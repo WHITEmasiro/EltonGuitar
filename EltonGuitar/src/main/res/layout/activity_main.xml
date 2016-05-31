@@ -10,7 +10,8 @@
         android:id="@+id/tbSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffcc99"/>
+        android:background="#FDC115"/>
+    <!--android:background="@mipmap/ic_launcher"/>-->
 
     <com.example.whiteer.helloguitar.MainViewPager
         android:id="@+id/mainViewPager"

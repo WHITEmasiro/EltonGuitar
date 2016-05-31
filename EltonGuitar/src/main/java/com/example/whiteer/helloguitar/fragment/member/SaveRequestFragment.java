@@ -187,8 +187,11 @@ public class SaveRequestFragment extends MyFragment {
                 view = layoutInflater.inflate(R.layout.request_item, viewGroup, false);
             }
             TextView tvRequest = (TextView)view.findViewById(R.id.tvRequest);
-            String text = request.getSheetName() + " " + request.getSingerName() + " " + request.getRequestDate();
+            String text = request.getSheetName() + " " + request.getRequestDate();
             tvRequest.setText(text);
+            TextView tvRequestSinger = (TextView)view.findViewById(R.id.tvRequestSinger);
+            text = request.getSingerName();
+            tvRequestSinger.setText(text);
             return view;
 
         }

@@ -4,15 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:id="@+id/ivSongIMage"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/elton_cell"/>
+
     <TextView
         android:id="@+id/tvSong"
         android:text="曲名未取得"
         android:textSize="20dp"
         android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/ivSongIMage"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="7dp"/>
 
     <TextView
         android:id="@+id/tvSinger"
@@ -21,7 +31,7 @@
         android:layout_below="@id/tvSong"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"/>
+        android:layout_alignLeft="@id/tvSong"/>
 
 
     <Button
