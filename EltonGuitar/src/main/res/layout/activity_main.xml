@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.whiteer.helloguitar.MainActivity">
 
@@ -10,7 +11,11 @@
         android:id="@+id/tbSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FDC115"/>
+        android:background="#FDC115" >
+
+
+
+    </android.support.v7.widget.Toolbar>
     <!--android:background="@mipmap/ic_launcher"/>-->
 
     <com.example.whiteer.helloguitar.MainViewPager

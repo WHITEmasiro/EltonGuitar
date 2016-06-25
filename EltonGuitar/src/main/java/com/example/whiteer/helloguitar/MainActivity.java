@@ -9,7 +9,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.whiteer.helloguitar.fragment.LoginFragment;
 import com.example.whiteer.helloguitar.fragment.RequestFragment;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private MyPagerAdapter myPagerAdapter;
     private Toolbar tbSearch;
     private int currentPage=0;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void findViews(){
 
-
         tbSearch = (Toolbar)findViewById(R.id.tbSearch);
         setSupportActionBar(tbSearch);
+        addSearchView();
         viewPager = (MainViewPager)findViewById(R.id.mainViewPager);
         myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
@@ -59,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 myPagerAdapter.getItem(currentPage).setHasOptionsMenu(false);
-
+                if(position != 0)
+                    tbSearch.removeView(searchView);
+                else
+                    addSearchView();
                 MyFragment selectedFragment = (MyFragment)myPagerAdapter.getItem(position);
                 selectedFragment.setHasOptionsMenu(true);
                 selectedFragment.update();
@@ -156,6 +164,14 @@ public class MainActivity extends AppCompatActivity {
             return pageList.get(position).getTitle();
         }
 
+    }
+
+    private void addSearchView() {
+        searchView = new SearchView(this);
+        searchView.setId(0);
+        searchView.setGravity(Gravity.LEFT);
+        searchView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        tbSearch.addView(searchView);
     }
 
 }

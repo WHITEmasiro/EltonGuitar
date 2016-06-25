@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_logout"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/zanhred"
         android:orderInCategory="1"
         android:title="logout"
         app:showAsAction="always"/>

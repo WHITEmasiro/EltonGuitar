@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/btnSaveSong"
-        android:background="@drawable/search"
+        android:background="@drawable/star"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
